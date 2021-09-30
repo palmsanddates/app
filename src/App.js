@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom';
 import NavBar from './Navbar/NavBar';
 import EventList from './EventsList/EventList'
 import LogIn from './LogIn/LogIn';
@@ -22,26 +22,25 @@ function App () {
   // }, [])
 
   return (
-    <Router>
-      <div className='App'>
-      <header className='App-header'>
-        <NavBar setModalLogin={setModalLogin} setModalCreateEvent={setModalCreateEvent}/>
-        <LogIn
-        show={modalLogin}
-        onHide={() => setModalLogin(false)}
-      />
-      <Route exact path="/" component={EventList}/>
-      <Route path="/eventDetails/:id" component={EventDetails} />  
-      <CreateEvent 
-        show={modalCreateEvent}
-        onHide={() => setModalCreateEvent(false)}
-        />    
-      </header>
-       <Footer/>
-    </div>
-    </Router>
-    
-  )
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+          <NavBar
+            setModalLogin={setModalLogin}
+            setModalCreateEvent={setModalCreateEvent}
+          />
+          <LogIn show={modalLogin} onHide={() => setModalLogin(false)} />
+          <Route exact path="/" component={EventList} />
+          <Route path="/eventDetails/:id" component={EventDetails} />
+          <CreateEvent
+            show={modalCreateEvent}
+            onHide={() => setModalCreateEvent(false)}
+          />
+        </header>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default App
