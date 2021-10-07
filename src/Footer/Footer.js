@@ -1,12 +1,12 @@
 import React from 'react'
-import './Footer.css';
+import '../assets/css/general.css'
 
-function Footer() {
+function Footer () {
   return (
-    <div className="Footer bg-light mt-5 p-3">
-    <footer>
-    <h6>Palms&Dates</h6>
-    </footer>
+    <div className='Footer bg-light mt-5 p-3'>
+      <footer>
+        <h6>2021 © Palms and Dates</h6>
+      </footer>
     </div>
   )
 }

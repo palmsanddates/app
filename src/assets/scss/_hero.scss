@@ -1,0 +1,65 @@
+/* 
+// 06.Hero
+*/
+
+@mixin overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+// Hero 1
+.hero-1-bg {
+    padding: 130px 0 110px;
+    background: rgba($primary, 0.025);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    .hero-1-title {
+        font-size: 52px;
+    }
+    .subscribe-form {
+        form {
+            position: relative;
+            max-width: 600px;
+            margin: 0px auto;
+        }
+        input {
+            padding: 29px 20px;
+            width: 100%;
+            border: none;
+            outline: none !important;
+            padding-right: 160px;
+            padding-left: 20px;
+            background-color: darken($gray-200, 1%);
+            border-radius: 4px;
+        }
+        button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        ::placeholder {
+            font-size: 16px;
+            color: lighten($secondary, 10%);
+        }
+    }
+}
+
+// ***** Responsive *****// 
+@media (max-width: 576px) {
+    .hero-1-title {
+        font-size: 36px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-1-bg {
+        .w-75 {
+            width: 100% !important;
+        }
+    }
+}

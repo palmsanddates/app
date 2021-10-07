@@ -1,18 +1,19 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { useState } from 'react'
-import { Route, BrowserRouter } from 'react-router-dom';
-import NavBar from './Navbar/NavBar';
+import { HashRouter as Router, Route } from 'react-router-dom'
+import NavBar from './Navbar/NavBar'
 import EventList from './EventsList/EventList'
-import LogIn from './LogIn/LogIn';
-import CreateEvent from './CreateEvent/CreateEvent';
-import Footer from './Footer/Footer';
-import EventDetails from './EventDetails/EventDetails';
-import './App.css'
+import LogIn from './LogIn/LogIn'
+import CreateEvent from './CreateEvent/CreateEvent'
+import Footer from './Footer/Footer'
+import EventDetails from './EventDetails/EventDetails'
+import './assets/css/general.css'
 
 function App () {
   // const [message, setMessage] = useState('')
-  const [modalLogin, setModalLogin] = useState(false);
-  const [modalCreateEvent, setModalCreateEvent] = useState(false);
+  const [modalLogin, setModalLogin] = useState(false)
+  const [modalCreateEvent, setModalCreateEvent] = useState(false)
+  const [authentification, setAuthentification] = useState(false)
 
   // useEffect(() => {
   //   fetch('http://localhost:5000')
@@ -22,16 +23,22 @@ function App () {
   // }, [])
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <header className="App-header">
+    <Router>
+      <div className='App'>
+        <header className='App-header'>
           <NavBar
             setModalLogin={setModalLogin}
             setModalCreateEvent={setModalCreateEvent}
+            authentification={authentification}
+            setAuthentification={setAuthentification}
           />
-          <LogIn show={modalLogin} onHide={() => setModalLogin(false)} />
-          <Route exact path="/" component={EventList} />
-          <Route path="/eventDetails/:id" component={EventDetails} />
+          <LogIn
+            setAuthentification={setAuthentification}
+            show={modalLogin}
+            onHide={() => setModalLogin(false)}
+          />
+          <Route exact path='/' component={EventList} />
+          <Route path='/eventDetails/:id' component={EventDetails} />
           <CreateEvent
             show={modalCreateEvent}
             onHide={() => setModalCreateEvent(false)}
@@ -39,8 +46,9 @@ function App () {
         </header>
         <Footer />
       </div>
-    </BrowserRouter>
-  );
+    </Router>
+
+  )
 }
 
 export default App
