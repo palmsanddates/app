@@ -1,48 +1,47 @@
-import { Modal, Button, Form } from 'react-bootstrap'
-import '../assets/css/general.css'
+import { Modal, Button, Form } from 'react-bootstrap';
+import '../assets/css/general.css';
 
-function LogIn (props) {
+function LogIn(props) {
   return (
     <Modal
       {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
+      size="sm"
+      aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header>
-        <Modal.Title id='contained-modal-title-vcenter'>
-          ADMIN LOG IN
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Admin Login
         </Modal.Title>
-        <Button onClick={props.onHide}>CLOSE</Button>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Label>EMAIL ADDRESS</Form.Label>
-            <Form.Control type='email' placeholder='EMAIL ADDRESS' />
-            <Form.Text className='text-muted'>
-              Please use your dominican.edu email address
-            </Form.Text>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control type="email" placeholder="example@dominican.edu" />
           </Form.Group>
 
-          <Form.Group className='mb-3' controlId='formBasicPassword'>
-            <Form.Label>PASSWORD</Form.Label>
-            <Form.Control type='password' placeholder='PASSWORD' />
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="" />
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant='primary' type='button'
+          variant="primary"
+          type="button"
           onClick={() => {
-            props.setAuthentification(true)
-            props.onHide()
+            props.setAuthentification(true);
+            props.onHide();
           }}
-        >SUBMIT
+          size="lg"
+        >
+          Login
         </Button>
       </Modal.Footer>
     </Modal>
-  )
+  );
 }
 
-export default LogIn
+export default LogIn;

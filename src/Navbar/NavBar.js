@@ -5,13 +5,13 @@ import '../assets/css/general.css'
 function NavBar (props) {
   const authentificatedButtons = (
     <Nav className='ms-auto'>
-      <Nav.Link href='#' onClick={() => props.setModalCreateEvent(true)}>CREATE EVENT</Nav.Link>
-      <Nav.Link href='#' onClick={() => props.setAuthentification(false)}>LOG OUT</Nav.Link>
+      <Nav.Link href='#' onClick={() => props.setModalCreateEvent(true)}>Create Event</Nav.Link>
+      <Nav.Link href='#' onClick={() => props.setAuthentification(false)}>Logout</Nav.Link>
     </Nav>
   )
   const unauthentificatedButtons = (
     <Nav className='ms-auto'>
-      <Nav.Link href='#' onClick={() => { props.setModalLogin(true) }}>ADMIN LOG IN</Nav.Link>
+      <Nav.Link href='#' onClick={() => { props.setModalLogin(true) }}>Admin Login</Nav.Link>
     </Nav>
   )
   return (
