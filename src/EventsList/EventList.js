@@ -1,31 +1,61 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import data from '../data.json'
-import { Col, Card } from 'react-bootstrap'
-import '../assets/css/general.css'
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Col, Card } from 'react-bootstrap';
+import axios from 'axios';
 
-function EventList () {
-  const event = data.map(({ id, event_flyer, event_name, date, location, description }) => {
+import '../assets/css/general.css';
+class EventList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      events: [],
+      isLoading: false,
+      error: null,
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      this.setState({ isLoading: true });
+      const res = await axios.get('http://localhost:5000/events');
+      if (res.status !== 200) {
+        throw new Error(res.data.message);
+      }
+      this.setState({ events: res.data, isLoading: false });
+    } catch (err) {
+      this.setState({ error: err, isLoading: false });
+    }
+  }
+
+  render() {
+    const { events, isLoading, error } = this.state;
+
+    if (error) {
+      return <p>{error.message}</p>;
+    }
+
+    if (isLoading) {
+      return <p>Loading ...</p>;
+    }
+
     return (
-      <Col key={`event-${id}`} md={6} className='mx-auto mt-5'>
-        <NavLink className='nav-link' to={`/eventDetails/${id}`}>
-          <Card>
-            <Card.Img variant='top' src='https://www.dominican.edu/sites/default/files/styles/width_1160/public/2020-01/caleuega-dining-hero.jpg?itok=cuezDcoB://cdn.vox-cdn.com/thumbor/eFEHo8eygHajtwShwT9e_jf7c-c=/0x0:1920x1080/1200x800/filters:focal(722x227:1028x533)/cdn.vox-cdn.com/uploads/chorus_image/image/69323002/Screen_Shot_2021_05_21_at_9.54.00_AM.0.jpeg' />
-            <Card.Body>
-              <Card.Text>
-                {event_name}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </NavLink>
-      </Col>
-    )
-  })
-  return (
-    <div className='EventList'>
-      {event}
-    </div>
-  )
+      <div className="EventList">
+        {events.map((event) => (
+          <Col key={`event-${event._id}`} md={6} className="mx-auto mt-5">
+            <NavLink className="nav-link" to={`/events/${event._id}`}>
+              <Card>
+                <Card.Img variant="top" src={event.flyer_img_url} />
+                <Card.Body>
+                  <Card.Text>{event.name}</Card.Text>
+                </Card.Body>
+              </Card>
+            </NavLink>
+          </Col>
+        ))}
+      </div>
+    );
+  }
 }
 
-export default EventList
+export default EventList;
