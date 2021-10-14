@@ -2,11 +2,13 @@ import { Navbar, Container, Nav } from 'react-bootstrap'
 import logo from '../Logo.png'
 import '../assets/css/general.css'
 
+import AuthService from '../services/auth.service';
+
 function NavBar (props) {
   const authentificatedButtons = (
     <Nav className='ms-auto'>
       <Nav.Link href='#' onClick={() => props.setModalCreateEvent(true)}>Create Event</Nav.Link>
-      <Nav.Link href='#' onClick={() => props.setAuthentification(false)}>Logout</Nav.Link>
+      <Nav.Link href='#' onClick={() => AuthService.logout()}>Logout</Nav.Link>
     </Nav>
   )
   const unauthentificatedButtons = (
@@ -19,8 +21,8 @@ function NavBar (props) {
       <Container>
         <Navbar.Brand href='/'><img
           src={logo}
-          width='60'
-          height='30'
+          width='120'
+          height='60'
           className='d-inline-block align-top'
           alt='logo'
                                />
