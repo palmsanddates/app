@@ -6,7 +6,7 @@ import EventList from './EventsList/EventList'
 import LogIn from './LogIn/LogIn'
 import CreateEvent from './CreateEvent/CreateEvent'
 import Footer from './Footer/Footer'
-import EventDetails from './EventDetails/EventDetails'
+import EventDetail from './EventDetail/EventDetail'
 import './assets/css/general.css'
 
 function App () {
@@ -14,7 +14,6 @@ function App () {
   const [modalLogin, setModalLogin] = useState(false)
   const [modalCreateEvent, setModalCreateEvent] = useState(false)
   const [authentification, setAuthentification] = useState(false)
-
   // useEffect(() => {
   //   fetch('http://localhost:5000')
   //     .then((res) => res.json())
@@ -38,7 +37,7 @@ function App () {
             onHide={() => setModalLogin(false)}
           />
           <Route exact path='/' component={EventList} />
-          <Route path='/eventDetails/:id' component={EventDetails} />
+          <Route path='/events/:eventId' component={EventDetail} />
           <CreateEvent
             show={modalCreateEvent}
             onHide={() => setModalCreateEvent(false)}
