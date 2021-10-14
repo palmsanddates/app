@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Col, Card } from 'react-bootstrap';
-import axios from 'axios';
+import API from '../utils/API';
 
 import '../assets/css/general.css';
 class EventList extends Component {
@@ -18,7 +18,7 @@ class EventList extends Component {
   async componentDidMount() {
     try {
       this.setState({ isLoading: true });
-      const res = await axios.get('http://localhost:5000/events');
+      const res = await API.get('/events');
       if (res.status !== 200) {
         throw new Error(res.data.message);
       }

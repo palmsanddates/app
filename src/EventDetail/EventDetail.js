@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Card } from 'react-bootstrap';
 import '../assets/css/general.css';
-import axios from 'axios';
+import API from '../utils/API';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -19,9 +19,7 @@ class EventDetail extends Component {
   async componentDidMount() {
     try {
       this.setState({ isLoading: true });
-      const res = await axios.get(
-        `http://localhost:5000/events/${this.state.event._id}`
-      );
+      const res = await API.get(`/events/${this.state.event._id}`);
       if (res.status !== 200) {
         throw new Error(res.data.message);
       }
