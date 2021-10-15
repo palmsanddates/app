@@ -1,15 +1,15 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
+
+import './assets/scss/custom.scss';
+import './assets/css/general.css';
+
 import NavBar from './Navbar/NavBar';
 import EventList from './EventsList/EventList';
 import LogIn from './LogIn/LogIn';
 import CreateEvent from './CreateEvent/CreateEvent';
 import Footer from './Footer/Footer';
 import EventDetail from './EventDetail/EventDetail';
-
-import './assets/scss/custom.scss';
-import './assets/css/general.css';
 
 import AuthService from './services/auth.service';
 import tokenPayload from './services/token-payload';

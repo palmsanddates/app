@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Col, Card, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import '../assets/css/general.css';
 import API from '../utils/API';
 import tokenPayload from '../services/token-payload';
 import EventService from '../services/event.service';
+import './EventDetails.css';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -82,16 +83,43 @@ class EventDetail extends Component {
       }
 
       pageContent = (
-        <Card>
-          <Card.Img variant="top" src={event.flyer_img_url} />
+        <Card className="event-detail-card">
+          <Card.Img
+            variant="top"
+            src={event.flyer_img_url}
+            className="event-detail-card-img"
+          />
           <Card.Body>
-            <Card.Text>{event.name}</Card.Text>
-            <Card.Text>{event.location}</Card.Text>
-            <Card.Text>{event.start_time}</Card.Text>
-            <Card.Text>{event.end_time}</Card.Text>
+            <Row>
+              <Col>
+                <p>
+                  <b>Name:</b>
+                </p>
+                <p>{event.name}</p>
+                <p>
+                  <b>Location:</b>
+                </p>
+                <p>{event.location}</p>
+              </Col>
+              <Col>
+                <p>
+                  <b>Start Time:</b>
+                </p>
+                <p>{event.start_time}</p>
+                <p>
+                  <b>End Time:</b>
+                </p>
+                <p>{event.end_time}</p>
+              </Col>
+            </Row>
           </Card.Body>
-          <Card.Footer className={classFooter}>
-            <Button variant="outline-danger" onClick={this.onDeleteClick}>
+          <Card.Footer>
+            <Button variant="primary">RSVP</Button>
+            <Button
+              variant="outline-danger"
+              onClick={this.onDeleteClick}
+              className={`${classFooter} mx-2`}
+            >
               Delete
             </Button>
             {/* <Button variant="outline-warning">Update</Button> */}
@@ -101,11 +129,11 @@ class EventDetail extends Component {
     }
 
     return (
-      <div className="EventDetails">
-        <Col md={6} className="mx-auto mt-5">
-          {pageContent}
-        </Col>
-      </div>
+      <Container>
+        <Row className="justify-content-center py-4">
+          <Col md={6}>{pageContent}</Col>
+        </Row>
+      </Container>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Container, Col, Card, Spinner } from 'react-bootstrap';
+import { Button, Container, Col, Card, Spinner } from 'react-bootstrap';
 import API from '../utils/API';
 import './EventList.css';
 
@@ -48,25 +48,25 @@ class EventList extends Component {
       pageContent = events.map((event) => (
         <Col
           key={`event-${event._id}`}
-          xl={4}
-          lg={6}
-          md={7}
-          sm={9}
-          xs={10}
+          xl={3}
+          lg={4}
+          md={6}
+          sm={8}
+          xs={7}
           className="mx-auto my-4"
         >
-          <NavLink className="nav-link mx-auto" to={`/events/${event._id}`}>
-            <Card className="border-0 event-card shadow">
+          <Card className="border-0 event-card shadow text-center rounded-3">
+            <NavLink className="nav-link p-0" to={`/events/${event._id}`}>
               <Card.Img
                 variant="top"
                 src={event.flyer_img_url}
-                className="event-card-img"
+                className="event-card-img rounded-3"
               />
-              <Card.Body>
-                <Card.Text>{event.name}</Card.Text>
-              </Card.Body>
-            </Card>
-          </NavLink>
+            </NavLink>
+            <Card.Footer>
+              <Button className="w-100 event-card-button">RSVP</Button>
+            </Card.Footer>
+          </Card>
         </Col>
       ));
     }

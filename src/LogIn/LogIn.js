@@ -40,8 +40,8 @@ class LogIn extends Component {
 
     try {
       await AuthService.login(this.state.email, this.state.password);
-      this.props.setAuthentification(true)
-      this.props.onHide()
+      this.props.setAuthentification(true);
+      this.props.onHide();
     } catch (err) {
       const resMessage =
         (err.response && err.response.data && err.response.data.message) ||
@@ -56,6 +56,17 @@ class LogIn extends Component {
   }
 
   render() {
+    let buttonContent;
+
+    if (this.state.isLoading) {
+      buttonContent = (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      );
+    } else {
+      buttonContent = <span>Login</span>;
+    }
     return (
       <Modal
         {...this.props}
@@ -97,12 +108,7 @@ class LogIn extends Component {
             disabled={this.state.isLoading}
             onClick={this.handleLogin}
           >
-            {this.state.isLoading && (
-              <Spinner animation="border" role="status" variant="primary">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            )}
-            <span>Login</span>
+            {buttonContent}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -34,7 +34,7 @@ function NavBar(props) {
     </Nav>
   );
   return (
-    <Navbar className="NavBar">
+    <Navbar className="NavBar shadow-sm">
       <Container>
         <Navbar.Brand href="/">
           <img

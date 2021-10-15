@@ -84,6 +84,18 @@ class CreateEvent extends Component {
   }
 
   render() {
+    let buttonContent;
+
+    if (this.state.isLoading) {
+      buttonContent = (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      );
+    } else {
+      buttonContent = <span>Create</span>;
+    }
+
     return (
       <Modal
         {...this.props}
@@ -151,12 +163,7 @@ class CreateEvent extends Component {
             disabled={this.state.isLoading}
             onClick={this.handleSubmit}
           >
-            {this.state.isLoading && (
-              <Spinner animation="border" role="status" variant="primary">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            )}
-            <span>Create</span>
+            {buttonContent}
           </Button>
         </Modal.Footer>
       </Modal>

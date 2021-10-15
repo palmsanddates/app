@@ -1,14 +1,22 @@
-import React from 'react'
-import '../assets/css/general.css'
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
-function Footer () {
+function Footer() {
   return (
-    <div className='Footer bg-light mt-5 p-3'>
-      <footer>
-        <h6>2021 © Palms and Dates</h6>
-      </footer>
+    <div className="footer py-3">
+      <Container>
+        <Row>
+          <Col lg={12}>
+            <div className="text-center">
+              <p className="text-white-50 font-size-15 mb-0">
+                {new Date().getFullYear()} © Palms and Dates
+              </p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

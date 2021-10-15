@@ -1,0 +1,10 @@
+.event-detail-card {
+  transition: box-shadow .3s;
+  /* border-radius: 5% !important; */
+}
+
+.event-detail-card-img {
+  object-fit: cover !important;
+  /* border-radius: 5% 5% 0% 0% !important; */
+  height: 40vh;
+}

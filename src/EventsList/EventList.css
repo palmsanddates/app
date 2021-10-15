@@ -1,6 +1,6 @@
 .event-card {
   transition: box-shadow .3s;
-  border-radius: 5% !important;
+  /* border-radius: 5% !important; */
 }
 
 .event-card:hover {
@@ -9,7 +9,11 @@
 }
 
 .event-card-img {
-  object-fit: 'cover';
-  border-radius: 5% 5% 0% 0% !important;
+  object-fit: cover;
+  /* border-radius: 5% 5% 0% 0% !important; */
   height: 50vh;
+}
+
+.event-card-button {
+  /* border-radius: % 0% 5% 5% !important; */
 }
