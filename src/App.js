@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import NavBar from './Navbar/NavBar';
 import EventList from './EventsList/EventList';
@@ -7,19 +7,26 @@ import Login from './Login/Login';
 import CreateEvent from './CreateEvent/CreateEvent';
 import Footer from './Footer/Footer';
 import EventDetail from './EventDetail/EventDetail';
+
+import './assets/scss/custom.scss'
 import './assets/css/general.css';
 
+import tokenPayload from './services/token-payload';
+
 function App() {
-  // const [message, setMessage] = useState('')
   const [modalLogin, setModalLogin] = useState(false);
   const [modalCreateEvent, setModalCreateEvent] = useState(false);
   const [authentification, setAuthentification] = useState(false);
-  // useEffect(() => {
-  //   fetch('http://localhost:5000')
-  //     .then((res) => res.json())
-  //     .then((data) => setMessage(data.message))
-  //     .catch(err => console.log(err))
-  // }, [])
+
+  let token = tokenPayload();
+
+  useEffect(() => {
+    if (Object.keys(token).length) {
+      if (token.exp * 1000 >= Date.now()) {
+        setAuthentification(true);
+      }
+    }
+  }, [token]);
 
   return (
     <Router>

@@ -7,13 +7,16 @@ class EventService {
   }
 
   getEvent(eventId) {
-    return API.get(`/events/${eventId}`)
+    return API.get(`/events/${eventId}`);
   }
 
   createEvent(newEvent) {
     return API.post('/events', newEvent, { headers: authHeader() });
   }
+
+  deleteEvent(eventId) {
+    return API.delete(`/events/${eventId}`, { headers: authHeader() });
+  }
 }
 
 export default new EventService();
-

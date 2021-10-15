@@ -1,5 +1,4 @@
 import API from '../utils/API'
-
 class AuthService {
   async login(email, password) {
     const res = await API.post(`/auth/login`, {

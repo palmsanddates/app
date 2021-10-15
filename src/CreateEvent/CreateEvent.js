@@ -51,7 +51,6 @@ class CreateEvent extends Component {
     });
 
     try {
-      console.log(this.state);
       await EventService.createEvent({
         name: this.state.name,
         description: this.state.description,
@@ -60,6 +59,16 @@ class CreateEvent extends Component {
         end_time: this.state.end_time,
         flyer_img: this.state.flyer_img,
       });
+      this.state = {
+        name: null,
+        description: null,
+        location: null,
+        start_time: null,
+        end_time: null,
+        flyer_img: null,
+        isLoading: false,
+        error: '',
+      };
       this.props.onHide();
     } catch (err) {
       const resMessage =

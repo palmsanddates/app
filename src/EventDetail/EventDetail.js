@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Col, Card } from 'react-bootstrap';
+import { Col, Card, Button, Spinner } from 'react-bootstrap';
 import '../assets/css/general.css';
 import API from '../utils/API';
+import tokenPayload from '../services/token-payload';
+import EventService from '../services/event.service';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -14,6 +16,8 @@ class EventDetail extends Component {
       isLoading: false,
       error: null,
     };
+
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   async componentDidMount() {
@@ -29,6 +33,28 @@ class EventDetail extends Component {
     }
   }
 
+  async onDeleteClick() {
+    this.setState({
+      isLoading: true,
+    });
+    try {
+      await EventService.deleteEvent(this.state.event._id);
+      this.setState({
+        isLoading: false,
+      });
+    } catch (err) {
+      const resMessage =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+
+      this.setState({
+        isLoading: false,
+        error: resMessage,
+      });
+    }
+  }
+
   render() {
     const { event, isLoading, error } = this.state;
 
@@ -36,26 +62,48 @@ class EventDetail extends Component {
       return <p>{error.message}</p>;
     }
 
+    let pageContent;
+
     if (isLoading) {
-      return <p>Loading ...</p>;
+      pageContent = (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      );
+    } else {
+      let classFooter = '';
+      const payload = tokenPayload();
+
+      if (
+        !Object.keys(payload).length ||
+        payload._id !== this.state.event.creator
+      ) {
+        classFooter += 'd-none';
+      }
+
+      pageContent = (
+        <Card>
+          <Card.Img variant="top" src={event.flyer_img_url} />
+          <Card.Body>
+            <Card.Text>{event.name}</Card.Text>
+            <Card.Text>{event.location}</Card.Text>
+            <Card.Text>{event.start_time}</Card.Text>
+            <Card.Text>{event.end_time}</Card.Text>
+          </Card.Body>
+          <Card.Footer className={classFooter}>
+            <Button variant="outline-danger" onClick={this.onDeleteClick}>
+              Delete
+            </Button>
+            {/* <Button variant="outline-warning">Update</Button> */}
+          </Card.Footer>
+        </Card>
+      );
     }
 
     return (
       <div className="EventDetails">
         <Col md={6} className="mx-auto mt-5">
-          <Card>
-            <Card.Img variant="top" src={event.flyer_img_url} />
-            <Card.Body>
-              <Card.Text>
-                {event.name}
-                {/* <p>{event.description}</p> */}
-                {/* <p>{event.rsvp_url}</p> */}
-              </Card.Text>
-              <Card.Text>{event.location}</Card.Text>
-              <Card.Text>{event.start_time}</Card.Text>
-              <Card.Text>{event.end_time}</Card.Text>
-            </Card.Body>
-          </Card>
+          {pageContent}
         </Col>
       </div>
     );
