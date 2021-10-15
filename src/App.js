@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import NavBar from './Navbar/NavBar';
 import EventList from './EventsList/EventList';
-import Login from './Login/Login.js';
+import LogIn from './LogIn/LogIn';
 import CreateEvent from './CreateEvent/CreateEvent';
 import Footer from './Footer/Footer';
 import EventDetail from './EventDetail/EventDetail';
@@ -41,7 +41,7 @@ function App() {
             authentification={authentification}
             setAuthentification={setAuthentification}
           />
-          <Login
+          <LogIn
             setAuthentification={setAuthentification}
             show={modalLogin}
             onHide={() => setModalLogin(false)}

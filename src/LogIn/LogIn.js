@@ -4,7 +4,7 @@ import { Modal, Button, Form, Spinner } from 'react-bootstrap';
 import AuthService from '../services/auth.service';
 import '../assets/css/general.css';
 
-class Login extends Component {
+class LogIn extends Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
@@ -110,4 +110,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LogIn;
