@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import NavBar from './Navbar/NavBar';
 import EventList from './EventsList/EventList';
-import Login from './Login/Login';
+import Login from './Login/Login.js';
 import CreateEvent from './CreateEvent/CreateEvent';
 import Footer from './Footer/Footer';
 import EventDetail from './EventDetail/EventDetail';
 
-import './assets/scss/custom.scss'
+import './assets/scss/custom.scss';
 import './assets/css/general.css';
 
+import AuthService from './services/auth.service';
 import tokenPayload from './services/token-payload';
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
     if (Object.keys(token).length) {
       if (token.exp * 1000 >= Date.now()) {
         setAuthentification(true);
+      } else {
+        AuthService.logout();
       }
     }
   }, [token]);

@@ -40,7 +40,7 @@ class EventList extends Component {
 
     if (isLoading) {
       pageContent = (
-        <Spinner animation="border" role="status">
+        <Spinner animation="border" role="status" variant="primary">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       );

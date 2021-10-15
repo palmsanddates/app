@@ -1,6 +1,6 @@
 .event-card {
   transition: box-shadow .3s;
-  border-radius: 5%;
+  border-radius: 5% !important;
 }
 
 .event-card:hover {
@@ -10,6 +10,6 @@
 
 .event-card-img {
   object-fit: 'cover';
-  border-radius: 5% 5% 0% 0%;
+  border-radius: 5% 5% 0% 0% !important;
   height: 50vh;
 }

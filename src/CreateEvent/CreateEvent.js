@@ -152,7 +152,7 @@ class CreateEvent extends Component {
             onClick={this.handleSubmit}
           >
             {this.state.isLoading && (
-              <Spinner animation="border" role="status">
+              <Spinner animation="border" role="status" variant="primary">
                 <span className="visually-hidden">Loading...</span>
               </Spinner>
             )}
