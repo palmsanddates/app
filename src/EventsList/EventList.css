@@ -1,5 +1,20 @@
+.EventList {
+  height: 90vh;
+  overflow-y: scroll;
+}
+.Loading {
+  height: 70vh;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.col-lg-5 {
+  width: 39%;
+}
+
 .event-card {
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
   /* border-radius: 5% !important; */
 }
 
@@ -10,8 +25,8 @@
 
 .event-card-img {
   object-fit: cover;
-  /* border-radius: 5% 5% 0% 0% !important; */
-  height: 50vh;
+  height: 100%;
+  width: 100%;
 }
 
 .event-card-button {
