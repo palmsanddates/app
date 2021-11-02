@@ -14,7 +14,10 @@ function EventList(){
       if (res.status !== 200) {
         throw new Error(res.data.message);
       }
-      setEvents(res.data);
+      const sortedEvent = res.data.sort(function(a,b){
+        return new Date(b.start_time) - new Date(a.start_time);
+      });
+      setEvents(sortedEvent);
       setIsLoading(false);
     }).catch(err => {
       setError(err);
@@ -34,6 +37,7 @@ function EventList(){
     const eventsList = (
       <Container>
           {events.map((event) => {
+            const isDisable = new Date(event.start_time) < new Date() ? true : false;
             return (
                   <Col
                 key={`event-${event._id}`}
@@ -50,7 +54,7 @@ function EventList(){
                     />
                   </NavLink>
                   <Card.Footer>
-                    <Button className="w-100 event-card-button">RSVP</Button>
+                    <Button className="w-100 event-card-button" disabled={isDisable}>{isDisable ? "Event has Passed" : "RSVP"}</Button>
                   </Card.Footer>
                 </Card>
               </Col> );})}
