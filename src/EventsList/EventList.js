@@ -53,10 +53,7 @@ function EventList(){
                     <Button className="w-100 event-card-button">RSVP</Button>
                   </Card.Footer>
                 </Card>
-              </Col>
-                
-            );
-            })}
+              </Col> );})}
       </Container>
     );
 
