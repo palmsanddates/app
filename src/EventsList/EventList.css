@@ -13,9 +13,6 @@
 .container {
   height: 100%;
 }
-.col-lg-5 {
-  width: 39%;
-}
 
 .event-card {
   transition: box-shadow 0.3s;
