@@ -25,7 +25,10 @@ function EventList(){
   }, [events]);
 
   if (error) {
-    return <div>{error.message}</div>;
+    return <div className="Loading">
+        <h1>Error</h1>
+        <p>{error.message}</p>
+    </div>;
   }
     const loading = (
       <div className="Loading">
@@ -44,14 +47,15 @@ function EventList(){
                 lg={5}
                 md={7}
                 sm={10}
-                className="event mx-auto my-4">
+                className="event mx-auto my-5">
                 <Card className="border-0 event-card shadow text-center rounded-3">
                   <NavLink className="p-0" to={`/events/${event._id}`}>
-                    <Card.Img
-                      variant="top"
-                      src={event.flyer_img_url}
-                      className="event-card-img rounded-3"
-                    />
+                    <Card.Body>
+                        <Card.Img
+                          src={event.flyer_img_url}
+                          className="event-card-img rounded-3"
+                        />
+                    </Card.Body>
                   </NavLink>
                   <Card.Footer>
                     <Button className="w-100 event-card-button" disabled={isDisable}>{isDisable ? "Event has Passed" : "RSVP"}</Button>
