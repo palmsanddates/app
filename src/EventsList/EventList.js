@@ -12,7 +12,7 @@ function EventList(){
   useEffect(() => {
     API.get('/events').then(res => {
       if (res.status !== 200) {
-        throw new Error(res.data.message);
+        throw new Error(res.data.message)
       }
       const sortedEvent = res.data.sort(function(a,b){
         return new Date(b.start_time) - new Date(a.start_time);
@@ -72,4 +72,4 @@ function EventList(){
     );
 }
 
-export default EventList;
+export default EventList
