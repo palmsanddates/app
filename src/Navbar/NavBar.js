@@ -6,9 +6,10 @@ import AuthService from '../services/auth.service'
 
 function NavBar (props) {
   const authentificatedButtons = (
-    <Nav className='ms-auto'>
-      <Nav.Link href='#' onClick={() => props.setModalCreateEvent(true)}>
-        <Button variant='outline-primary'>Create Event</Button>
+
+    <Nav fixed="top" className="ms-auto">
+      <Nav.Link href="#" onClick={() => props.setModalCreateEvent(true)}>
+        <Button variant="outline-primary">Create Event</Button>
       </Nav.Link>
       <Nav.Link
         href='#'

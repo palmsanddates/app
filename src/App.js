@@ -22,9 +22,14 @@ function App () {
   const token = tokenPayload()
 
   useEffect(() => {
+    console.log('token', token);
     if (Object.keys(token).length) {
       if (token.exp * 1000 >= Date.now()) {
-        setAuthentification(true)
+        setAuthentification(true);
+        setInterval(() => {
+          AuthService.logout();
+          setAuthentification(false);
+        }, token.exp * 1000 - Date.now());
       } else {
         AuthService.logout()
       }
