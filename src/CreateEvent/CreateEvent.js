@@ -19,7 +19,7 @@ class CreateEvent extends Component {
       flyer_img: null,
       isLoading: false,
       error: '',
-      validated:false
+      validated: false
     }
   }
 
@@ -44,10 +44,10 @@ class CreateEvent extends Component {
   }
 
   async handleSubmit (e) {
-    const form = e.currentTarget;
+    const form = e.currentTarget
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault()
+      e.stopPropagation()
     }
     this.setState({
       validated: true
@@ -120,14 +120,14 @@ class CreateEvent extends Component {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 required
-                placeholder="Event Name"
+                placeholder='Event Name'
                 type='text'
                 name='name'
                 minLength={1}
                 maxLength={50}
                 onChange={this.onChangeEventParam}
               />
-        <Form.Control.Feedback type="invalid">Please enter an event name</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please enter an event name</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -135,27 +135,27 @@ class CreateEvent extends Component {
               <Form.Control
                 required
                 name='description'
-                placeholder="Event Description"
+                placeholder='Event Description'
                 minLength={1}
                 maxLength={1000}
                 as='textarea'
                 onChange={this.onChangeEventParam}
               />
-                <Form.Control.Feedback type="invalid">Please enter an event description</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please enter an event description</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Location</Form.Label>
+              <Form.Label>Location</Form.Label>
               <Form.Control
                 required
-                placeholder="Event Location"
+                placeholder='Event Location'
                 type='text'
                 name='location'
                 minLength={1}
                 maxLength={50}
                 onChange={this.onChangeEventParam}
               />
-              <Form.Control.Feedback type="invalid">Please enter an event location</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please enter an event location</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -164,10 +164,10 @@ class CreateEvent extends Component {
                 required
                 type='datetime-local'
                 name='start_time'
-                min={new Date().toISOString().substring(0,16)}
+                min={new Date().toISOString().substring(0, 16)}
                 onChange={this.onChangeEventParam}
               />
-              <Form.Control.Feedback type="invalid">Please enter an event start time</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please enter an event start time</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -179,21 +179,20 @@ class CreateEvent extends Component {
                 min={this.state.start_time}
                 onChange={this.onChangeEventParam}
               />
-              <Form.Control.Feedback type="invalid">Please enter an event end time</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please enter an event end time</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
               <Form.Label>RSVP URL</Form.Label>
               <Form.Control
-                required 
-                type="url"
-                placeholder="https://www.example.com"
-                pattern="https://.*" size="30"
-                >
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">Please enter a valid RSVP URL</Form.Control.Feedback>
+                required
+                type='url'
+                placeholder='https://www.example.com'
+                pattern='https://.*' size='30'
+              />
+              <Form.Control.Feedback type='invalid'>Please enter a valid RSVP URL</Form.Control.Feedback>
             </Form.Group>
-              <Form.Text className='text-muted' />
+            <Form.Text className='text-muted' />
             <Form.Group controlId='formFile' className='mb-3'>
               <Form.Label>Upload Image</Form.Label>
               <Form.Control
@@ -203,7 +202,7 @@ class CreateEvent extends Component {
                 onChange={this.onChangeEventFlyer}
                 accept='.jpg,.jpeg,.png'
               />
-              <Form.Control.Feedback type="invalid">Please upload an event image</Form.Control.Feedback>
+              <Form.Control.Feedback type='invalid'>Please upload an event image</Form.Control.Feedback>
             </Form.Group>
           </Form>
         </Modal.Body>

@@ -1,7 +1,5 @@
 .EventList {
   height: 85vh;
-  margin-top: 1rem;
-  overflow-y: scroll;
 }
 .Loading {
   height: 75vh;
@@ -12,11 +10,11 @@
 
 .container {
   height: 100%;
+  overflow-y: scroll;
 }
 
 .event-card {
   transition: box-shadow 0.3s;
-  /* border-radius: 5% !important; */
 }
 
 .event-card:hover {
@@ -35,7 +33,3 @@
   height: 100%;
   max-height: 65vh;
 }
-
-/* .event-card-button {
-  border-radius: % 0% 5% 5% !important;
-} */

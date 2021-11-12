@@ -58,7 +58,6 @@ class EventDetail extends Component {
 
   render () {
     const { event, isLoading, error } = this.state
-
     if (error) {
       return <p>{error.message}</p>
     }
@@ -89,32 +88,21 @@ class EventDetail extends Component {
             src={event.flyer_img_url}
             className='event-detail-card-img'
           />
-          <Card.Body>
-            <Row>
+          <Card.Body className='p-3'>
+            <Row className='mx-auto'>
               <Col>
-                <p>
-                  <b>Name:</b>
-                </p>
-                <p>{event.name}</p>
-                <p>
-                  <b>Location:</b>
-                </p>
-                <p>{event.location}</p>
-              </Col>
-              <Col>
-                <p>
-                  <b>Start Time:</b>
-                </p>
-                <p>{event.start_time}</p>
-                <p>
-                  <b>End Time:</b>
-                </p>
-                <p>{event.end_time}</p>
+                <b className='center m-4'>DETAILS</b>
+                <p className='detail-entry'><b>Name:</b> <span>{event.name}</span></p>
+                <p className='detail-entry'><b>Location:</b> <span>{event.location}</span></p>
+                <p className='detail-entry'><b>Start Time:</b> <span>{new Date(event.start_time).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}</span></p>
+                <p className='detail-entry'><b>End Time:</b> <span>{new Date(event.end_time).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}</span></p>
+                <p className='center pt-2'><b>Description</b></p>
+                <p className='center'>{event.description}</p>
               </Col>
             </Row>
           </Card.Body>
           <Card.Footer>
-            <Button variant='primary'>RSVP</Button>
+            <Button className='w-100' variant='primary'>RSVP</Button>
             <Button
               variant='outline-danger'
               onClick={this.onDeleteClick}
