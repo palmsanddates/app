@@ -199,8 +199,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer {
-  background: darken($dark, 8%);
-  padding: 70px 0 40px;
+  background: $body-bg;
+
+  padding: 2rem;
   .footer-social-icon-content {
     .footer-social-icon {
       color: rgba($white, 0.5);
@@ -227,4 +228,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 .footer-alt {
   background: darken($dark, 11%);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375
+rem
+0.75
+rem
+;
+  padding-bottom: 10
+px
+;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1
+px
+solid #ced4da;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25
+rem
+;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-label {
+  margin-top: 1.5rem;
 }
