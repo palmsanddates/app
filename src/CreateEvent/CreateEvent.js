@@ -197,9 +197,8 @@ class CreateEvent extends Component {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>RSVP URL</Form.Label>
+              <Form.Label>RSVP Url</Form.Label>
               <Form.Control
-                required
                 type="url"
                 placeholder="https://www.example.com"
                 pattern="https://.*"
