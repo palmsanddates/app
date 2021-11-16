@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
+import { Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import '../assets/css/general.css';
 import API from '../utils/API';
 import tokenPayload from '../services/token-payload';
 import EventService from '../services/event.service';
-import './EventDetails.css';
+import './EventDetail.css';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -151,11 +151,11 @@ class EventDetail extends Component {
     }
 
     return (
-      <Container>
+      <div className="detail-container">
         <Row className="justify-content-center py-4">
           <Col md={6}>{pageContent}</Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 }

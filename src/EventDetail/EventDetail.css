@@ -1,13 +1,15 @@
 
 .Loading {
-  height: 75vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container {
-  height: 100%;
+.detail-container {
+  height: 80vh;
+  width: 100vw;
+  overflow-y: scroll;
 }
 
 .event-card {

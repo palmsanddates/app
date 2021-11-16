@@ -69,7 +69,7 @@ function EventList() {
                     className="w-100 event-card-button"
                     disabled={isDisable}
                   >
-                    {isDisable ? 'Event has Passed' : 'RSVP'}
+                    {isDisable ? 'Event has Passed' : 'RSVP'}
                   </Button>
                 </Card.Footer>
               </Card>
