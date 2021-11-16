@@ -8,8 +8,9 @@
   align-items: center;
 }
 
-.container {
-  height: 100%;
+.events-container {
+  height: 80vh;
+  width: 100vw;
   overflow-y: scroll;
 }
 

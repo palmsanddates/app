@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button, Container, Col, Card, Spinner } from 'react-bootstrap';
+import { Button, Col, Card, Spinner } from 'react-bootstrap';
 import API from '../utils/API';
 import './EventList.css';
 import '../assets/css/general.css';
@@ -43,39 +43,41 @@ function EventList() {
     </div>
   );
   const eventsList = (
-    <Container>
-      {events.map((event) => {
-        const isDisable = new Date(event.start_time) < new Date();
-        return (
-          <Col
-            key={`event-${event._id}`}
-            lg={5}
-            md={7}
-            sm={10}
-            className="event mx-auto my-5"
-          >
-            <Card className="border-0 event-card shadow text-center rounded-3">
-              <NavLink className="p-0" to={`/events/${event._id}`}>
-                <Card.Body>
-                  <Card.Img
-                    src={event.flyer_img_url}
-                    className="event-card-img rounded-3"
-                  />
-                </Card.Body>
-              </NavLink>
-              <Card.Footer>
-                <Button
-                  className="w-100 event-card-button"
-                  disabled={isDisable}
-                >
-                  {isDisable ? 'Event has Passed' : 'RSVP'}
-                </Button>
-              </Card.Footer>
-            </Card>
-          </Col>
-        );
-      })}
-    </Container>
+    <div className="events-container">
+      {
+        events.map((event) => {
+          const isDisable = new Date(event.start_time) < new Date();
+          return (
+            <Col
+              key={`event-${event._id}`}
+              lg={5}
+              md={7}
+              sm={10}
+              className="event mx-auto my-5"
+            >
+              <Card className="border-0 event-card shadow text-center rounded-3">
+                <NavLink className="p-0" to={`/events/${event._id}`}>
+                  <Card.Body>
+                    <Card.Img
+                      src={event.flyer_img_url}
+                      className="event-card-img rounded-3"
+                    />
+                  </Card.Body>
+                </NavLink>
+                <Card.Footer>
+                  <Button
+                    className="w-100 event-card-button"
+                    disabled={isDisable}
+                  >
+                    {isDisable ? 'Event has Passed' : 'RSVP'}
+                  </Button>
+                </Card.Footer>
+              </Card>
+            </Col>
+          );
+        })
+      }
+    </div>
   );
 
   return <div className="EventList">{isLoading ? loading : eventsList}</div>;
