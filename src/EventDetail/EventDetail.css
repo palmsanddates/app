@@ -1,13 +1,13 @@
 
 .Loading {
-  height: 80vh;
+  height: 82vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .detail-container {
-  height: 80vh;
+  height: 82vh;
   width: 100vw;
   overflow-y: scroll;
 }

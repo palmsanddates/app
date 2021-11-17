@@ -10,7 +10,7 @@ class LogIn extends Component {
     this.handleLogin = this.handleLogin.bind(this)
     this.onChangeEmail = this.onChangeEmail.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
-
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.state = {
       email: '',
       password: '',
@@ -29,6 +29,12 @@ class LogIn extends Component {
     this.setState({
       password: e.target.value
     })
+  }
+
+  handleKeyPress (e) {
+    if (e.keyCode === 13) {
+      this.handleLogin(e)
+    }
   }
 
   async handleLogin (e) {
@@ -57,7 +63,6 @@ class LogIn extends Component {
 
   render () {
     let buttonContent
-
     if (this.state.isLoading) {
       buttonContent = (
         <Spinner animation='border' role='status'>
@@ -66,6 +71,10 @@ class LogIn extends Component {
       )
     } else {
       buttonContent = <span>Login</span>
+    }
+    let isDisable = true
+    if (this.state.email !== '' && this.state.password !== '') {
+      isDisable = false
     }
     return (
       <Modal
@@ -80,7 +89,7 @@ class LogIn extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onKeyDown={this.handleKeyPress}>
             <Form.Group className='mb-3' controlId='formBasicEmail'>
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -95,6 +104,7 @@ class LogIn extends Component {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type='password'
+                placeholder='Password'
                 value={this.state.password}
                 onChange={this.onChangePassword}
               />
@@ -105,7 +115,7 @@ class LogIn extends Component {
           <Button
             variant='primary'
             type='button'
-            disabled={this.state.isLoading}
+            disabled={isDisable}
             onClick={this.handleLogin}
           >
             {buttonContent}
