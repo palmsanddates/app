@@ -8,8 +8,8 @@ class LogIn extends Component {
   constructor (props) {
     super(props)
     this.handleLogin = this.handleLogin.bind(this)
-    this.onChangeEmail = this.onChangeEmail.bind(this)
-    this.onChangePassword = this.onChangePassword.bind(this)
+    this.handleChangeEmail = this.handleChangeEmail.bind(this)
+    this.handleChangePassword = this.handleChangePassword.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.state = {
       email: '',
@@ -19,13 +19,13 @@ class LogIn extends Component {
     }
   }
 
-  onChangeEmail (e) {
+  handleChangeEmail (e) {
     this.setState({
       email: e.target.value
     })
   }
 
-  onChangePassword (e) {
+  handleChangePassword (e) {
     this.setState({
       password: e.target.value
     })
@@ -96,7 +96,7 @@ class LogIn extends Component {
                 type='email'
                 placeholder='example@dominican.edu'
                 value={this.state.email}
-                onChange={this.onChangeEmail}
+                onChange={this.handleChangeEmail}
               />
             </Form.Group>
 
@@ -106,7 +106,7 @@ class LogIn extends Component {
                 type='password'
                 placeholder='Password'
                 value={this.state.password}
-                onChange={this.onChangePassword}
+                onChange={this.handleChangePassword}
               />
             </Form.Group>
           </Form>

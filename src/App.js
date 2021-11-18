@@ -5,7 +5,7 @@ import './assets/scss/custom.scss'
 import './assets/css/general.css'
 
 import NavBar from './Navbar/NavBar'
-import EventList from './EventsList/EventList'
+import EventList from './EventList/EventList'
 import LogIn from './LogIn/LogIn'
 import CreateEvent from './CreateEvent/CreateEvent'
 import Footer from './Footer/Footer'

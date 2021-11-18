@@ -8,8 +8,8 @@ class CreateEvent extends Component {
   constructor (props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.onChangeEventParam = this.onChangeEventParam.bind(this)
-    this.onChangeEventFlyer = this.onChangeEventFlyer.bind(this)
+    this.handleEventParam = this.handleEventParam.bind(this)
+    this.handleEventFlyer = this.handleEventFlyer.bind(this)
     this.state = {
       name: null,
       description: null,
@@ -25,13 +25,13 @@ class CreateEvent extends Component {
     }
   }
 
-  onChangeEventParam (event) {
+  handleEventParam (event) {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
-  onChangeEventFlyer (event) {
+  handleEventFlyer (event) {
     event.preventDefault()
     const reader = new FileReader()
     const file = event.target.files[0]
@@ -52,12 +52,8 @@ class CreateEvent extends Component {
       e.stopPropagation()
     }
     this.setState({
-      validated: true
+      validated: true, isLoading: true
     })
-    this.setState({
-      isLoading: true
-    })
-
     try {
       await EventService.createEvent({
         name: this.state.name,
@@ -127,7 +123,7 @@ class CreateEvent extends Component {
                 name='name'
                 minLength={1}
                 maxLength={50}
-                onChange={this.onChangeEventParam}
+                onChange={this.handleEventParam}
               />
               <Form.Control.Feedback type='invalid'>
                 Please enter an event name
@@ -143,7 +139,7 @@ class CreateEvent extends Component {
                 minLength={1}
                 maxLength={1000}
                 as='textarea'
-                onChange={this.onChangeEventParam}
+                onChange={this.handleEventParam}
               />
               <Form.Control.Feedback type='invalid'>
                 Please enter an event description
@@ -159,7 +155,7 @@ class CreateEvent extends Component {
                 name='location'
                 minLength={1}
                 maxLength={50}
-                onChange={this.onChangeEventParam}
+                onChange={this.handleEventParam}
               />
               <Form.Control.Feedback type='invalid'>
                 Please enter an event location
@@ -177,7 +173,7 @@ class CreateEvent extends Component {
                 )
                   .toISOString()
                   .substring(0, 16)}
-                onChange={this.onChangeEventParam}
+                onChange={this.handleEventParam}
               />
               <Form.Control.Feedback type='invalid'>
                 Please enter an event start time
@@ -191,7 +187,7 @@ class CreateEvent extends Component {
                 type='datetime-local'
                 name='end_time'
                 min={this.state.start_time}
-                onChange={this.onChangeEventParam}
+                onChange={this.handleEventParam}
               />
               <Form.Control.Feedback type='invalid'>
                 Please enter an event end time
@@ -217,7 +213,7 @@ class CreateEvent extends Component {
                 required
                 type='file'
                 name='flyer_img'
-                onChange={this.onChangeEventFlyer}
+                onChange={this.handleEventFlyer}
                 accept='.jpg,.jpeg,.png'
               />
               <Form.Control.Feedback type='invalid'>
@@ -227,7 +223,7 @@ class CreateEvent extends Component {
 
             <Form.Group>
               <Form.Label>Clubs and Organizations</Form.Label>
-              <Form.Control required as='select' name='clubs' onChange={this.onChangeEventParam} value={this.state.clubs} custom>
+              <Form.Control required as='select' name='clubs' onChange={this.handleEventParam} value={this.state.clubs} multiple={true}>
                 <option value=''>Please select club or organization</option>
                 <option value='1'>Barowsky Student Association</option>
                 <option value='2'>Global Ambassadors</option>

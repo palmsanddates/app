@@ -54,12 +54,14 @@ function EventList () {
               sm={10}
               className='event mx-auto my-5'
             >
-              <Card className='border-0 event-card shadow text-center rounded-3'>
+
+              <Card className='border-0 event-card shadow text-center'>
                 <NavLink className='p-0' to={`/events/${event._id}`}>
+                  <Card.Header className='text-dark'>{event.name}</Card.Header>
                   <Card.Body>
                     <Card.Img
                       src={event.flyer_img_url}
-                      className='event-card-img rounded-3'
+                      className='event-card-img'
                     />
                     <span className='img-time'> {new Date(event.end_time).toLocaleString('en-US', {
                       weekday: 'short',

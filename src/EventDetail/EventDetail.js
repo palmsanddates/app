@@ -61,7 +61,7 @@ class EventDetail extends Component {
     if (error) {
       return <p>{error.message}</p>
     }
-    
+
     let pageContent
     if (isLoading) {
       pageContent = (
@@ -128,7 +128,7 @@ class EventDetail extends Component {
                 </p>
                 <p className='detail-entry'>
                   <b>Club or Organization:</b>
-                  {event.clubs && event.clubs.map(club=><span>{club.name}</span>)}
+                  {event.clubs && event.clubs.map(club => <span key={club.name}>{club.name}</span>)}
 
                 </p>
                 <p className='center pt-2 mb-0'>
@@ -140,13 +140,14 @@ class EventDetail extends Component {
             </Row>
           </Card.Body>
           <Card.Footer className='d-flex'>
-            {!isCreator && <Button className='w-100' disabled={isDisable} variant='primary'>
-              {isDisable ? 'Event has Passed' : 'RSVP'}
-                           </Button>}
+            {!isCreator &&
+              <Button className='w-100' disabled={isDisable} variant='primary'>
+                {isDisable ? 'Event has Passed' : 'RSVP'}
+              </Button>}
 
             <Button
               variant='outline-danger'
-              onClick={this.onDeleteClick}
+              onClick={this.handleDeleteClick}
               className={`${classFooter} ms-auto`}
             >
               Delete
