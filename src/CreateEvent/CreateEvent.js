@@ -86,7 +86,6 @@ function CreateEvent (props) {
         })
     }
   }
-<<<<<<< HEAD
   return(
     <Modal show={props.show} onHide={props.onHide}>
       <Modal.Header closeButton>
@@ -197,124 +196,6 @@ function CreateEvent (props) {
               onSelect={(selected) => setForm({...form, clubs: selected})}
               onRemove={(removed) => setForm({...form, clubs: removed})}
               selectionLimit={3}
-=======
-
-  render () {
-    let buttonContent
-
-    if (this.state.isLoading) {
-      buttonContent = (
-        <Spinner animation='border' role='status'>
-          <span className='visually-hidden'>Loading...</span>
-        </Spinner>
-      )
-    } else {
-      buttonContent = <span>Create</span>
-    }
-
-    return (
-      <Modal
-        {...this.props}
-        size='lg'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>
-            Create Event
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form noValidate validated={this.state.validated}>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                required
-                placeholder='Event Name'
-                type='text'
-                name='name'
-                minLength={1}
-                maxLength={50}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event name
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                required
-                name='description'
-                placeholder='Event Description'
-                minLength={1}
-                maxLength={1000}
-                as='textarea'
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event description
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                required
-                placeholder='Event Location'
-                type='text'
-                name='location'
-                minLength={1}
-                maxLength={50}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event location
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Start Time</Form.Label>
-              <Form.Control
-                required
-                type='datetime-local'
-                name='start_time'
-                min={new Date(
-                  new Date() - new Date().getTimezoneOffset() * 60 * 1000
-                )
-                  .toISOString()
-                  .substring(0, 16)}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event start time
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>End Time</Form.Label>
-              <Form.Control
-                required
-                type='datetime-local'
-                name='end_time'
-                min={this.state.start_time}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event end time
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>RSVP URL</Form.Label>
-              <Form.Control
-                name='rsvp_url'
-                type='url'
-                placeholder='https://www.example.com'
-                pattern='https://.*'
-                size='30'
->>>>>>> 04c4dc6bddead919919e212f4b6b6a078c6de316
               />
             <Form.Control.Feedback type="invalid">
               This field is required.   </Form.Control.Feedback>  </Form.Group> 
