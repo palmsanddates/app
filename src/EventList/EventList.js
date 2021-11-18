@@ -54,7 +54,6 @@ function EventList () {
               sm={10}
               className='event mx-auto my-5'
             >
-
               <Card className='border-0 event-card shadow text-center'>
                 <NavLink className='p-0' to={`/events/${event._id}`}>
                   <Card.Header className='text-dark'>{event.name}</Card.Header>

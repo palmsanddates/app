@@ -43,10 +43,10 @@ function App () {
             setModalLogin={setModalLogin}
             setModalCreateEvent={setModalCreateEvent}
             authentification={authentification}
-            setAuthentification={setAuthentification}
+            setauthentification={setAuthentification}
           />
           <LogIn
-            setAuthentification={setAuthentification}
+            setauthentification={setAuthentification}
             show={modalLogin}
             onHide={() => setModalLogin(false)}
           />

@@ -128,7 +128,10 @@ class EventDetail extends Component {
                 </p>
                 <p className='detail-entry'>
                   <b>Club or Organization:</b>
-                  {event.clubs && event.clubs.map(club => <span key={club.name}>{club.name}</span>)}
+                  <ul style={{textAlign:"right", listStyleType:"none"}}>
+                  {event.clubs && event.clubs.map(club => <li className="" key={club.name}>{club.name}</li>)}
+                  </ul>
+                  
 
                 </p>
                 <p className='center pt-2 mb-0'>

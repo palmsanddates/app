@@ -14,7 +14,7 @@ function NavBar (props) {
       <Nav.Link
         href='#'
         onClick={() => {
-          props.setAuthentification(false)
+          props.setauthentification(false)
           AuthService.logout()
         }}
       >

@@ -1,0 +1,8 @@
+.chip {
+  background-color: #e48669;
+}
+
+.multiSelectContainer input {
+  width: 100%;
+  overflow: visible;
+}
