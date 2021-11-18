@@ -132,7 +132,7 @@ class EventDetail extends Component {
 
                 </p>
                 <p className='center pt-2 mb-0'>
-                  <b>Description</b>
+                  <b>Event Description</b>
                 </p>
                 <hr className='mt-0' />
                 <p className='center'>{event.description}</p>

@@ -109,7 +109,7 @@ class CreateEvent extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id='contained-modal-title-vcenter'>
-            Create an Event
+            Create Event
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
