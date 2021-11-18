@@ -61,7 +61,7 @@ class EventDetail extends Component {
     if (error) {
       return <p>{error.message}</p>
     }
-
+    
     let pageContent
     if (isLoading) {
       pageContent = (
@@ -81,7 +81,6 @@ class EventDetail extends Component {
         classFooter += 'd-none'
         isCreator = false
       }
-      console.log(event.rsvp_url)
 
       pageContent = (
         <Card className='event-detail-card'>
@@ -129,7 +128,8 @@ class EventDetail extends Component {
                 </p>
                 <p className='detail-entry'>
                   <b>Club or Organization:</b>
-                  <span>{event.clubs}</span>
+                  {event.clubs && event.clubs.map(club=><span>{club.name}</span>)}
+
                 </p>
                 <p className='center pt-2 mb-0'>
                   <b>Description</b>
