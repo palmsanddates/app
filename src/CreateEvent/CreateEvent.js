@@ -5,6 +5,7 @@ import API from '../utils/API'
 import EventService from '../services/event.service'
 import '../assets/css/general.css'
 import './CreateEvent.css'
+import { setToInvalid, setToValid, setDeaultValue } from '../utils/MultiselectValidate';
 
 function CreateEvent (props) {
   const [form, setForm] = useState({
@@ -49,7 +50,22 @@ function CreateEvent (props) {
         [event.target.name]: event.target.value
       })
     }
+    setValidated(false)
   }
+  useEffect(() => {
+    setForm({
+      name: null,
+      description: null,
+      location: null,
+      start_time: null,
+      end_time: null,
+      flyer_img: null,
+      rsvp_url: null,
+      clubs: [],
+    })
+    setValidated(false)
+    
+  }, [props.show])
   useEffect(() => {
     API.get('/clubs')
       .then((res) => {
@@ -62,10 +78,17 @@ function CreateEvent (props) {
         setError(err)
       })
   }, []) 
-    
+
   async function handleSubmit (e) {
     e.preventDefault()
     setValidated(true)
+    if(document.getElementById('search_input')) {
+      if(form.clubs.length === 0) {
+        setToInvalid();
+      } else {
+        setToValid();
+      }
+    }
     if (e.currentTarget.checkValidity()) {
       setIsLoading(true)
       try {
@@ -74,17 +97,8 @@ function CreateEvent (props) {
         setError(err.message)
       }
       setIsLoading(false)
-      setForm({
-        name: null,
-        description: null,
-        location: null,
-        start_time: null,
-        end_time: null,
-        flyer_img: null,
-        rsvp_url: null,
-        clubs: [],
-        })
-    }
+      props.onHide()
+    } 
   }
   return(
     <Modal show={props.show} onHide={props.onHide}>
@@ -185,23 +199,31 @@ function CreateEvent (props) {
             <Form.Control.Feedback type='invalid'>
               Please enter a valid RSVP URL
             </Form.Control.Feedback></Form.Group>
-          <Form.Group controlId="formBasicClubs">
+          <Form.Group controlId="search_input">
             <Form.Label>Clubs</Form.Label>
             <Multiselect
-              required
               options={clubs} 
               selectedValues={form.clubs} 
               displayValue='name'
               placeholder='Select clubs or organizations'
-              onSelect={(selected) => setForm({...form, clubs: selected})}
-              onRemove={(removed) => setForm({...form, clubs: removed})}
+              onSelect={(selected) => {
+                setForm({...form, clubs: selected})
+                setValidated(false)
+                setDeaultValue()
+              }}
+              onRemove={(removed) => {
+                setForm({...form, clubs: removed})
+                setValidated(false) 
+                setDeaultValue()
+              }}
               selectionLimit={3}
+              closeOnSelect={true}
               />
-            <Form.Control.Feedback type="invalid">
-              This field is required.   </Form.Control.Feedback>  </Form.Group> 
+            <Form.Control.Feedback type="invalid" id="valid-club">
+              This field is required.</Form.Control.Feedback> </Form.Group> 
               
           <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
-            {isLoading ? 'Creating Event...' : 'Create Event'}
+            {isLoading ? 'Creating Event...' : 'Create'}
           </Button>
         </Form>
       </Modal.Body>

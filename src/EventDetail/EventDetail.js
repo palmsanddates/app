@@ -18,7 +18,7 @@ class EventDetail extends Component {
       error: null
     }
 
-    this.onDeleteClick = this.onDeleteClick.bind(this)
+    this.handleDeleteClick = this.handleDeleteClick.bind(this)
   }
 
   async componentDidMount () {
@@ -34,7 +34,7 @@ class EventDetail extends Component {
     }
   }
 
-  async onDeleteClick () {
+  async handleDeleteClick () {
     this.setState({
       isLoading: true
     })
@@ -43,6 +43,7 @@ class EventDetail extends Component {
       this.setState({
         isLoading: false
       })
+      window.location = '/';
     } catch (err) {
       const resMessage =
         (err.response && err.response.data && err.response.data.message) ||
@@ -126,14 +127,12 @@ class EventDetail extends Component {
                     })}
                   </span>
                 </p>
-                <p className='detail-entry'>
+                <div className='detail-entry'>
                   <b>Club or Organization:</b>
                   <ul style={{textAlign:"right", listStyleType:"none"}}>
-                  {event.clubs && event.clubs.map(club => <li className="" key={club.name}>{club.name}</li>)}
+                    {event.clubs && event.clubs.map(club => <li className="" key={club.name}>{club.name}</li>)}
                   </ul>
-                  
-
-                </p>
+                </div>
                 <p className='center pt-2 mb-0'>
                   <b>Event Description</b>
                 </p>
