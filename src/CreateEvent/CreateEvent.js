@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { createEventAction, setGetEventsLoading } from '../actions';
 import { Modal, Button, Form, Alert } from 'react-bootstrap'
 import Multiselect from 'multiselect-react-dropdown';
-import API from '../utils/API'
-import EventService from '../services/event.service'
+import API from '../utils/API';
 import '../assets/css/general.css'
 import './CreateEvent.css'
 import { setToInvalid, setToValid, setDeaultValue } from '../utils/MultiselectValidate';
 
 function CreateEvent (props) {
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.stateData);
+	const { createEventError } = data;
+  const [error, setError] = useState('');
   const [form, setForm] = useState({
     name: null,
     description: null,
@@ -19,7 +24,6 @@ function CreateEvent (props) {
     clubs: [],
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
   const [validated, setValidated] = useState(false)
   const [clubs, setClubs] = useState([])
   function handleEventParam (event) {
@@ -64,7 +68,6 @@ function CreateEvent (props) {
       clubs: [],
     })
     setValidated(false)
-    
   }, [props.show])
   useEffect(() => {
     API.get('/clubs')
@@ -91,14 +94,20 @@ function CreateEvent (props) {
     }
     if (e.currentTarget.checkValidity()) {
       setIsLoading(true)
-      try {
-        await EventService.createEvent(form)
-      } catch (err) {
-        setError(err.message)
-      }
+      dispatch(setGetEventsLoading())
+      dispatch(createEventAction(form))
       setIsLoading(false)
       props.onHide()
     } 
+  }
+  if (error) {
+    return (
+      <div className='Loading d-flex flex-column'>
+        <h1>Something Went Wrong!</h1>
+        <iframe src="https://giphy.com/embed/TpkhbFd6ap0pq" width="480" height="360" frameBorder="0" title="Error-gif" allowFullScreen></iframe>
+        <p>{error.message}</p>
+      </div>
+    )
   }
   return(
     <Modal show={props.show} onHide={props.onHide}>
@@ -106,8 +115,8 @@ function CreateEvent (props) {
         <Modal.Title>Create Event</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      {error && <Alert variant="danger">{error}</Alert>}
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      {createEventError && <Alert variant="danger">{createEventError}</Alert>}
+        <Form noValidate validated={validated} onSubmit={handleSubmit} className="d-flex flex-column">
           <Form.Group controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -221,8 +230,7 @@ function CreateEvent (props) {
               />
             <Form.Control.Feedback type="invalid" id="valid-club">
               This field is required.</Form.Control.Feedback> </Form.Group> 
-              
-          <Button variant="primary" type="submit" className="mt-3" disabled={isLoading}>
+          <Button variant="primary" type="submit" className="mt-3 ms-auto" disabled={isLoading}>
             {isLoading ? 'Creating Event...' : 'Create'}
           </Button>
         </Form>
