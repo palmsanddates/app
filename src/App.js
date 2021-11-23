@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import './assets/scss/custom.scss'
@@ -13,6 +16,10 @@ import EventDetail from './EventDetail/EventDetail'
 
 import AuthService from './services/auth.service'
 import tokenPayload from './services/token-payload'
+
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function App () {
   const [modalLogin, setModalLogin] = useState(false)
@@ -36,30 +43,32 @@ function App () {
   }, [token])
 
   return (
-    <Router>
-      <div className='App'>
-        <header className='App-header'>
-          <NavBar
-            setModalLogin={setModalLogin}
-            setModalCreateEvent={setModalCreateEvent}
-            authentification={authentification}
-            setAuthentification={setAuthentification}
-          />
-          <LogIn
-            setAuthentification={setAuthentification}
-            show={modalLogin}
-            onHide={() => setModalLogin(false)}
-          />
-          <Route exact path='/' component={EventList} />
-          <Route path='/events/:eventId' component={EventDetail} />
-          <CreateEvent
-            show={modalCreateEvent}
-            onHide={() => setModalCreateEvent(false)}
-          />
-        </header>
-        <Footer />
+    <Provider store={store}>
+       <Router>
+        <div className='App'>
+          <header className='App-header'>
+            <NavBar
+              setModalLogin={setModalLogin}
+              setModalCreateEvent={setModalCreateEvent}
+              authentification={authentification}
+              setauthentification={setAuthentification}
+            />
+            <LogIn
+              setauthentification={setAuthentification}
+              show={modalLogin}
+              onHide={() => setModalLogin(false)}
+            />
+            <Route exact path='/' component={EventList} />
+            <Route path='/events/:eventId' component={EventDetail} />
+            <CreateEvent
+              show={modalCreateEvent}
+              onHide={() => setModalCreateEvent(false)}
+            />
+          </header>
+          <Footer />
       </div>
     </Router>
+    </Provider>
   )
 }
 

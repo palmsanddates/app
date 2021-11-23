@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { getEventsAction, setGetEventsLoading } from '../actions';
 import { NavLink } from 'react-router-dom'
 import { Button, Col, Card, Spinner } from 'react-bootstrap'
-import API from '../utils/API'
 import './EventList.css'
 import '../assets/css/general.css'
 
 function EventList () {
-  const [isLoading, setIsLoading] = useState(true)
-  const [events, setEvents] = useState([])
-  const [error, setError] = useState(false)
-  useEffect(() => {
-    API.get('/events')
-      .then((res) => {
-        if (res.status !== 200) {
-          throw new Error(res.data.message)
-        }
-        res.data.sort(
-          (a, b) => new Date(b.start_time) - new Date(a.start_time)
-        )
-        setEvents(res.data)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        setError(err)
-      })
-  }, [])
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.stateData);
+	const { events, loadEventsError, loadEventsLoading } = data;
 
-  if (error) {
+  useEffect(() => {
+    dispatch(setGetEventsLoading())
+    dispatch(getEventsAction())
+  }, [dispatch])
+  
+  if (loadEventsError) {
     return (
-      <div className='Loading'>
-        <h1>Error</h1>
-        <p>{error.message}</p>
+      <div className='Loading d-flex flex-column'>
+        <h1>Something Went Wrong!</h1>
+        <iframe src="https://giphy.com/embed/TpkhbFd6ap0pq" width="480" height="360" frameBorder="0" title="Error-gif" allowFullScreen></iframe>
+        <p>{loadEventsError}</p>
       </div>
     )
   }
@@ -44,7 +35,7 @@ function EventList () {
   const eventsList = (
     <div className='events-container'>
       {
-        events.map((event) => {
+        events && events.map((event) => {
           const isDisable = new Date(event.start_time) < new Date()
           return (
             <Col
@@ -54,7 +45,6 @@ function EventList () {
               sm={10}
               className='event mx-auto my-5'
             >
-
               <Card className='border-0 event-card shadow text-center'>
                 <NavLink className='p-0' to={`/events/${event._id}`}>
                   <Card.Header className='text-dark'>{event.name}</Card.Header>
@@ -90,7 +80,7 @@ function EventList () {
     </div>
   )
 
-  return <div className='EventList'>{isLoading ? loading : eventsList}</div>
+  return <div className='EventList'>{loadEventsLoading ? loading : eventsList}</div>
 }
 
 export default EventList

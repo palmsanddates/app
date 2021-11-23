@@ -1,16 +1,63 @@
-import React, { Component } from 'react'
-import { Modal, Button, Form, Spinner } from 'react-bootstrap'
-
-import EventService from '../services/event.service'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { createEventAction, setGetEventsLoading } from '../actions';
+import { Modal, Button, Form, Alert } from 'react-bootstrap'
+import Multiselect from 'multiselect-react-dropdown';
+import API from '../utils/API';
 import '../assets/css/general.css'
+import './CreateEvent.css'
+import { setToInvalid, setToValid, setDeaultValue } from '../utils/MultiselectValidate';
 
-class CreateEvent extends Component {
-  constructor (props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleEventParam = this.handleEventParam.bind(this)
-    this.handleEventFlyer = this.handleEventFlyer.bind(this)
-    this.state = {
+function CreateEvent (props) {
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.stateData);
+	const { createEventError } = data;
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    name: null,
+    description: null,
+    location: null,
+    start_time: null,
+    end_time: null,
+    flyer_img: null,
+    rsvp_url: null,
+    clubs: [],
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [validated, setValidated] = useState(false)
+  const [clubs, setClubs] = useState([])
+  function handleEventParam (event) {
+    if(event.target.name === 'clubs') {
+      if(event.target.value !== '') {
+        let newClubs = form.clubs
+        newClubs.push(event.target.value)
+        setForm({
+          ...form,
+          clubs: newClubs
+        })
+      }
+    }
+    else if (event.target.name === 'flyer_img') {
+      const reader = new FileReader()
+      const file = event.target.files[0]
+      reader.onloadend = () => {
+        setForm({
+          ...form,
+          [event.target.name]: reader.result
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+    else {
+      setForm({
+        ...form,
+        [event.target.name]: event.target.value
+      })
+    }
+    setValidated(false)
+  }
+  useEffect(() => {
+    setForm({
       name: null,
       description: null,
       location: null,
@@ -19,232 +66,177 @@ class CreateEvent extends Component {
       flyer_img: null,
       rsvp_url: null,
       clubs: [],
-      isLoading: false,
-      error: '',
-      validated: false
-    }
-  }
-
-  handleEventParam (event) {
-    this.setState({
-      [event.target.name]: event.target.value
     })
-  }
-
-  handleEventFlyer (event) {
-    event.preventDefault()
-    const reader = new FileReader()
-    const file = event.target.files[0]
-
-    reader.onloadend = () => {
-      this.setState({
-        flyer_img: reader.result
+    setValidated(false)
+  }, [props.show])
+  useEffect(() => {
+    API.get('/clubs')
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error(res.data.message)
+        }
+        setClubs(res.data.clubs)
       })
-    }
-
-    reader.readAsDataURL(file)
-  }
-
-  async handleSubmit (e) {
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    this.setState({
-      validated: true, isLoading: true
-    })
-    try {
-      await EventService.createEvent({
-        name: this.state.name,
-        description: this.state.description,
-        location: this.state.location,
-        start_time: this.state.start_time,
-        end_time: this.state.end_time,
-        flyer_img: this.state.flyer_img
+      .catch((err) => {
+        setError(err)
       })
-      this.state = {
-        name: null,
-        description: null,
-        location: null,
-        start_time: null,
-        end_time: null,
-        flyer_img: null,
-        isLoading: false,
-        error: ''
+  }, []) 
+
+  async function handleSubmit (e) {
+    e.preventDefault()
+    setValidated(true)
+    if(document.getElementById('search_input')) {
+      if(form.clubs.length === 0) {
+        setToInvalid();
+      } else {
+        setToValid();
       }
-      this.props.onHide()
-    } catch (err) {
-      const resMessage =
-        (err.response && err.response.data && err.response.data.message) ||
-        err.message ||
-        err.toString()
-
-      this.setState({
-        isLoading: false,
-        error: resMessage
-      })
     }
+    if (e.currentTarget.checkValidity()) {
+      setIsLoading(true)
+      dispatch(setGetEventsLoading())
+      dispatch(createEventAction(form))
+      setIsLoading(false)
+      props.onHide()
+    } 
   }
-
-  render () {
-    let buttonContent
-
-    if (this.state.isLoading) {
-      buttonContent = (
-        <Spinner animation='border' role='status'>
-          <span className='visually-hidden'>Loading...</span>
-        </Spinner>
-      )
-    } else {
-      buttonContent = <span>Create</span>
-    }
-
+  if (error) {
     return (
-      <Modal
-        {...this.props}
-        size='lg'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>
-            Create Event
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form noValidate validated={this.state.validated}>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                required
-                placeholder='Event Name'
-                type='text'
-                name='name'
-                minLength={1}
-                maxLength={50}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event name
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                required
-                name='description'
-                placeholder='Event Description'
-                minLength={1}
-                maxLength={1000}
-                as='textarea'
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event description
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                required
-                placeholder='Event Location'
-                type='text'
-                name='location'
-                minLength={1}
-                maxLength={50}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event location
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Start Time</Form.Label>
-              <Form.Control
-                required
-                type='datetime-local'
-                name='start_time'
-                min={new Date(
-                  new Date() - new Date().getTimezoneOffset() * 60 * 1000
-                )
-                  .toISOString()
-                  .substring(0, 16)}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event start time
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>End Time</Form.Label>
-              <Form.Control
-                required
-                type='datetime-local'
-                name='end_time'
-                min={this.state.start_time}
-                onChange={this.handleEventParam}
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter an event end time
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>RSVP URL</Form.Label>
-              <Form.Control
-                name='rsvp_url'
-                type='url'
-                placeholder='https://www.example.com'
-                pattern='https://.*'
-                size='30'
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please enter a valid RSVP URL
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId='formFile' className='mb-3'>
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control
-                required
-                type='file'
-                name='flyer_img'
-                onChange={this.handleEventFlyer}
-                accept='.jpg,.jpeg,.png'
-              />
-              <Form.Control.Feedback type='invalid'>
-                Please upload an event image
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Clubs and Organizations</Form.Label>
-              <Form.Control required as='select' name='clubs' onChange={this.handleEventParam} value={this.state.clubs} multiple={true}>
-                <option value=''>Please select club or organization</option>
-                <option value='1'>Barowsky Student Association</option>
-                <option value='2'>Global Ambassadors</option>
-                <option value='3'>Debate Club</option>
-                <option value='3'>Other</option>
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant='primary'
-            type='buttton'
-            disabled={this.state.isLoading}
-            onClick={this.handleSubmit}
-          >
-            {buttonContent}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <div className='Loading d-flex flex-column'>
+        <h1>Something Went Wrong!</h1>
+        <iframe src="https://giphy.com/embed/TpkhbFd6ap0pq" width="480" height="360" frameBorder="0" title="Error-gif" allowFullScreen></iframe>
+        <p>{error.message}</p>
+      </div>
     )
   }
+  return(
+    <Modal show={props.show} onHide={props.onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Create Event</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      {createEventError && <Alert variant="danger">{createEventError}</Alert>}
+        <Form noValidate validated={validated} onSubmit={handleSubmit} className="d-flex flex-column">
+          <Form.Group controlId="formBasicName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter event name"
+              name='name'
+              minLength={1}
+              maxLength={50}
+              onChange={handleEventParam}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.   </Form.Control.Feedback>  </Form.Group>   
+          <Form.Group controlId="formBasicDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              minLength={1}
+              maxLength={1000}
+              placeholder="Enter event description"
+              name="description"
+              onChange={handleEventParam}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+               This field is required.   </Form.Control.Feedback>  </Form.Group>
+          <Form.Group controlId="formBasicLocation">
+            <Form.Label>Location</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter event location"
+              name="location"
+              onChange={handleEventParam}
+              minLength={1}
+              maxLength={50}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.   </Form.Control.Feedback>  </Form.Group>
+          <Form.Group controlId="formBasicStartTime">
+            <Form.Label>Start Time</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              placeholder="Enter event start time"
+              name="start_time"
+              onChange={handleEventParam}
+              min={new Date(
+                new Date() - new Date().getTimezoneOffset() * 60 * 1000
+              ).toISOString()
+              .substring(0, 16)}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.   </Form.Control.Feedback>  </Form.Group>
+          <Form.Group controlId="formBasicEndTime">
+            <Form.Label>End Time</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              placeholder="Enter event end time"
+              name="end_time"
+              onChange={handleEventParam}
+              min={form.start_time}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.   </Form.Control.Feedback>  </Form.Group>
+          <Form.Group controlId="formBasicFlyer">
+            <Form.Label>Flyer Image</Form.Label>
+            <Form.Control
+              name="flyer_img"
+              type="file"
+              placeholder="Enter event flyer image"
+              onChange={handleEventParam}
+              accept='.jpg,.jpeg,.png'
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.   </Form.Control.Feedback>  </Form.Group>
+          <Form.Group controlId="formBasicRsvp">
+            <Form.Label>RSVP URL</Form.Label>
+            <Form.Control
+              type="text"
+              name="rsvp_url"
+              placeholder='https://www.example.com'
+              pattern='https://.*'
+              size='30'
+              onChange={handleEventParam}
+            />
+            <Form.Control.Feedback type='invalid'>
+              Please enter a valid RSVP URL
+            </Form.Control.Feedback></Form.Group>
+          <Form.Group controlId="search_input">
+            <Form.Label>Clubs</Form.Label>
+            <Multiselect
+              options={clubs} 
+              selectedValues={form.clubs} 
+              displayValue='name'
+              placeholder='Select clubs or organizations'
+              onSelect={(selected) => {
+                setForm({...form, clubs: selected})
+                setValidated(false)
+                setDeaultValue()
+              }}
+              onRemove={(removed) => {
+                setForm({...form, clubs: removed})
+                setValidated(false) 
+                setDeaultValue()
+              }}
+              selectionLimit={3}
+              closeOnSelect={true}
+              />
+            <Form.Control.Feedback type="invalid" id="valid-club">
+              This field is required.</Form.Control.Feedback> </Form.Group> 
+          <Button variant="primary" type="submit" className="mt-3 ms-auto" disabled={isLoading}>
+            {isLoading ? 'Creating Event...' : 'Create'}
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  )
 }
+
 export default CreateEvent
