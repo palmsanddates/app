@@ -1,17 +1,18 @@
 import axios from 'axios';
 
-let baseURL;
+const axiosOptions = {
+  development: {
+    baseURL: 'http://localhost:5000',
+    responseType: 'json',
+  },
+  test: {
+    baseURL: 'http://localhost:5000',
+    responseType: 'json',
+  },
+  production: {
+    baseURL: 'https://api.palmsanddates.com',
+    responseType: 'json',
+  },
+};
 
-switch (process.env.NODE_ENV) {
-  case 'production':
-    baseURL = 'https://api.palmsanddates.com';
-    break;
-  default:
-    baseURL = 'http://localhost:5000';
-    break;
-}
-
-export default axios.create({
-  baseURL,
-  responseType: 'json',
-});
+export default axios.create(axiosOptions[process.env.NODE_ENV]);
