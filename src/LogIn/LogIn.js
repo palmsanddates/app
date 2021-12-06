@@ -48,6 +48,9 @@ class LogIn extends Component {
       await AuthService.login(this.state.email, this.state.password)
       this.props.setauthentification(true)
       this.props.onHide()
+      this.setState({
+        isLoading: false
+      })
     } catch (err) {
       const resMessage =
         (err.response && err.response.data && err.response.data.message) ||
