@@ -237,7 +237,7 @@ function CreateEvent(props) {
               onChange={handleEventParam}
             />
             <Form.Control.Feedback type="invalid">
-              Please enter a valid RSVP URL
+              Please enter a valid URL that starts with "https://"{' '}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="search_input">
