@@ -40,9 +40,10 @@ function EventList () {
           return (
             <Col
               key={`event-${event._id}`}
-              lg={5}
-              md={7}
-              sm={10}
+              lg={4}
+              md={6}
+              sm={8}
+              xs={9}
               className='event mx-auto my-5'
             >
               <Card className='border-0 event-card shadow text-center'>
