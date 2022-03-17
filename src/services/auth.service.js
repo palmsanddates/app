@@ -1,5 +1,19 @@
 import API from '../utils/API'
 class AuthService {
+  async signup (name, email, institutionId) {
+    const res = await API.put('/auth/signup', {
+      name,
+      email,
+      institutionId
+    })
+
+    if (res.data.token) {
+      localStorage.setItem('user', JSON.stringify(res.data));
+    }
+    
+    return res.data
+  }
+
   async login (email, password) {
     const res = await API.post('/auth/login', {
       email,

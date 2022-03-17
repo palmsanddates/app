@@ -9,7 +9,7 @@ import './assets/css/general.css'
 
 import NavBar from './Navbar/NavBar'
 import EventList from './EventList/EventList'
-import LogIn from './LogIn/LogIn'
+import SignupLogin  from './SignupLogin/SignupLogin';
 import CreateEvent from './CreateEvent/CreateEvent'
 import Footer from './Footer/Footer'
 import EventDetail from './EventDetail/EventDetail'
@@ -22,7 +22,7 @@ import rootReducer from './reducers';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function App () {
-  const [modalLogin, setModalLogin] = useState(false)
+  const [modalSignupLogin, setModalSignupLogin] = useState(false)
   const [modalCreateEvent, setModalCreateEvent] = useState(false)
   const [authentification, setAuthentification] = useState(false)
 
@@ -44,32 +44,32 @@ function App () {
 
   return (
     <Provider store={store}>
-       <Router>
-        <div className='App'>
-          <header className='App-header'>
+      <Router>
+        <div className="App">
+          <header className="App-header">
             <NavBar
-              setModalLogin={setModalLogin}
+              setModalSignupLogin={setModalSignupLogin}
               setModalCreateEvent={setModalCreateEvent}
               authentification={authentification}
               setauthentification={setAuthentification}
             />
-            <LogIn
+            <SignupLogin
               setauthentification={setAuthentification}
-              show={modalLogin}
-              onHide={() => setModalLogin(false)}
+              show={modalSignupLogin}
+              onHide={() => setModalSignupLogin(false)}
             />
-            <Route exact path='/' component={EventList} />
-            <Route path='/events/:eventId' component={EventDetail} />
+            <Route exact path="/" component={EventList} />
+            <Route path="/events/:eventId" component={EventDetail} />
             <CreateEvent
               show={modalCreateEvent}
               onHide={() => setModalCreateEvent(false)}
             />
           </header>
           <Footer />
-      </div>
-    </Router>
+        </div>
+      </Router>
     </Provider>
-  )
+  );
 }
 
 export default App

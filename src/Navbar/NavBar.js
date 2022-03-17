@@ -26,11 +26,9 @@ function NavBar (props) {
     <Nav className='ms-auto'>
       <Nav.Link
         href='#'
-        onClick={() => {
-          props.setModalLogin(true)
-        }}
+        onClick={() => props.setModalSignupLogin(true)}
       >
-        <Button variant='outline-primary'>Admin Login</Button>
+        <Button variant='outline-primary'>Signup/Login</Button>
       </Nav.Link>
     </Nav>
   )
