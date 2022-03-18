@@ -18,12 +18,10 @@ class EventService {
     return API.delete(`/events/${eventId}`, { headers: authHeader() });
   }
 
-  createSuggestion(suggestion) {
-    return API.put(
-      '/events/suggestions',
-      { name: suggestion },
-      { headers: authHeader() }
-    );
+  createSuggestion(newSuggestion) {
+    return API.put('/events/suggestions', newSuggestion, {
+      headers: authHeader(),
+    });
   }
 }
 
