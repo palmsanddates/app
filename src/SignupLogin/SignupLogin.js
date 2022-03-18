@@ -105,6 +105,7 @@ function SignupLogin(props) {
       <Form.Group className="mb-3" controlId="formBasicSelect">
         <Form.Label>Institution</Form.Label>
         <Form.Select name="institutionId" onChange={handleChangeForm}>
+          <option>Select Institution</option>
           {institutions &&
             institutions.map((institution) => {
               return (
@@ -173,17 +174,28 @@ function SignupLogin(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{modalContent}</Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer
+        style={{ display: 'inline-grid' }}
+        className="w-100 justify-content-center"
+      >
         <Button
           variant="primary"
           type="button"
           disabled={isDisabled}
           onClick={handleSubmit}
+          className="w-100"
         >
           {buttonContent}
         </Button>
-        <Button variant="link" onClick={() => setIsSignup(!isSignup)}>
-          Switch to {isSignup ? 'Login' : 'Signup'}
+        <Button
+          variant="link"
+          onClick={() => setIsSignup(!isSignup)}
+          size="xs"
+          className="w-100"
+        >
+          {isSignup
+            ? 'Already have an account? Login Here'
+            : "Don't have an account? Signup Here"}
         </Button>
       </Modal.Footer>
     </Modal>
