@@ -39,16 +39,20 @@ function SignupLogin(props) {
     e.preventDefault();
     setIsLoading(true);
     try {
-      if (isSignup)
+      if (isSignup) {
         await AuthService.signup(
           signupForm.name,
           signupForm.email,
           signupForm.institutionId
-        );
-      else await AuthService.login(loginForm.email, loginForm.password);
+        )
+        setIsSignup(false);
+      }
+      else {
+        await AuthService.login(loginForm.email, loginForm.password);
+        props.setauthentification(true);
+        props.onHide();
+      };
 
-      props.setauthentification(true);
-      props.onHide();
       setIsLoading(false);
     } catch (err) {
       setError(
