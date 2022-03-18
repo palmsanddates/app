@@ -1,22 +1,30 @@
-import API from '../utils/API'
-import authHeader from './auth-header'
+import API from '../utils/API';
+import authHeader from './auth-header';
 
 class EventService {
-  getEvents () {
-    return API.get('/events')
+  getEvents() {
+    return API.get('/events');
   }
 
-  getEvent (eventId) {
-    return API.get(`/events/${eventId}`)
+  getEvent(eventId) {
+    return API.get(`/events/${eventId}`);
   }
 
-  createEvent (newEvent) {
-    return API.post('/events', newEvent, { headers: authHeader() })
+  createEvent(newEvent) {
+    return API.post('/events', newEvent, { headers: authHeader() });
   }
 
-  deleteEvent (eventId) {
-    return API.delete(`/events/${eventId}`, { headers: authHeader() })
+  deleteEvent(eventId) {
+    return API.delete(`/events/${eventId}`, { headers: authHeader() });
+  }
+
+  createSuggestion(suggestion) {
+    return API.put(
+      '/events/suggestions',
+      { name: suggestion },
+      { headers: authHeader() }
+    );
   }
 }
 
-export default new EventService()
+export default new EventService();

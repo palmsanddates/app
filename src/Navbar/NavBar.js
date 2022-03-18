@@ -6,29 +6,29 @@ import AuthService from '../services/auth.service'
 
 function NavBar (props) {
   const authentificatedButtons = (
-
-    <Nav fixed='top' className='ms-auto'>
-      <Nav.Link href='#' onClick={() => props.setModalCreateEvent(true)}>
-        <Button variant='outline-primary'>Create Event</Button>
+    <Nav fixed="top" className="ms-auto">
+      <Nav.Link href="#" onClick={() => props.setModalSuggestEvent(true)}>
+        <Button variant="outline-primary">Suggest an Event</Button>
       </Nav.Link>
+
       <Nav.Link
-        href='#'
+        href="#"
         onClick={() => {
-          props.setauthentification(false)
-          AuthService.logout()
+          props.setauthentification(false);
+          AuthService.logout();
         }}
       >
-        <Button variant='outline-primary'>Logout</Button>
+        <Button variant="outline-primary">Logout</Button>
       </Nav.Link>
     </Nav>
-  )
+  );
   const unauthentificatedButtons = (
     <Nav className='ms-auto'>
       <Nav.Link
         href='#'
         onClick={() => props.setModalSignupLogin(true)}
       >
-        <Button variant='outline-primary'>Signup/Login</Button>
+        <Button variant='outline-primary'>Signup | Login</Button>
       </Nav.Link>
     </Nav>
   )
